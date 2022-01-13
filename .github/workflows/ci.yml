@@ -27,6 +27,9 @@ jobs:
 #      - name: Greeting if Windows
 #        if: matrix.os == 'windows-latest'
 #        run: echo "Hey from Win2!"
+
+      - name: Run Postgres
+        run: docker run -d postgres:latest
           
       - name: Install dependencies
         run: mvn package -DskipTests=true
