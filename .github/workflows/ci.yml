@@ -27,14 +27,9 @@ jobs:
       - name: Greeting if Windows
         if: matrix.os == 'windows-latest'
         run: echo "Hey from Win2!"
-        
-     # - name: Setup MVN
-     #   uses: stCarolas/setup-maven@v4.2
-     #   with:
-     #     maven-version: ${{ matrix.maven-versions }}
           
-     # - name: Install dependencies
-     #   run: mvn package -DskipTests=true
+      - name: Install dependencies
+        run: ./mvnw package -DskipTests=true
         
-    #  - name: Run the tests
-    #    run: mvn test  
+      - name: Run the tests
+        run: ./mvnw test  
