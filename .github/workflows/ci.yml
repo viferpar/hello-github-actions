@@ -1,11 +1,16 @@
 name: First workflow
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix: 
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+        maven-versions: ['3.8.4', '3.6.3']
 
+    name: ${{ matrix.os }} MVN ${{ matrix.maven-versions }}
     steps:
       - uses: actions/checkout@v2
 
@@ -18,6 +23,15 @@ jobs:
         run: |
           echo "Job Context: $JOB_CONTEXT"
           echo "Done!"
+          
+      - name: Greeting if Windows
+        if: matrix.os == 'windows-latest'
+        run: echo "Hey from Win2!"
+        
+      - name: Setup MVN
+        uses: aahmed-se/setup-maven@v3
+        with:
+          maven-version: ${{ matrix.maven-versions }}
           
       - name: Install dependencies
         run: mvn package -DskipTests=true
