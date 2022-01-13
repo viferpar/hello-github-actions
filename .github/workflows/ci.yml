@@ -29,8 +29,15 @@ jobs:
 #        run: echo "Hey from Win2!"
 
       - name: Run Postgres
-        run: docker run -d postgres:latest
-          
+        run: docker run -d --name="db" postgres:latest
+        
+      - name: Check DB is running
+        run: |
+          while ! docker exec db pg_isready; do
+              echo "Waiting for database connection..."
+              sleep 2
+          done
+      
       - name: Install dependencies
         run: mvn package -DskipTests=true
         
