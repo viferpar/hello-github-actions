@@ -4,13 +4,13 @@ on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix: 
-        os: [ubuntu-latest, windows-latest, macOS-latest]
-        maven-versions: ['3.8.4', '3.6.3']
+    runs-on: ubuntu-20.04
+#    strategy:
+#      matrix: 
+#        os: [ubuntu-latest, windows-latest, macOS-latest]
+#        maven-versions: ['3.8.4', '3.6.3']
 
-    name: ${{ matrix.os }} MVN ${{ matrix.maven-versions }}
+#    name: ${{ matrix.os }} MVN ${{ matrix.maven-versions }}
     steps:
       - uses: actions/checkout@v2
 
@@ -24,12 +24,12 @@ jobs:
           echo "Job Context: $JOB_CONTEXT"
           echo "Done!"
           
-      - name: Greeting if Windows
-        if: matrix.os == 'windows-latest'
-        run: echo "Hey from Win2!"
+#      - name: Greeting if Windows
+#        if: matrix.os == 'windows-latest'
+#        run: echo "Hey from Win2!"
           
       - name: Install dependencies
-        run: ./mvnw package -DskipTests=true
+        run: mvn package -DskipTests=true
         
       - name: Run the tests
-        run: ./mvnw test  
+        run: mvn test  
