@@ -29,11 +29,11 @@ jobs:
 #        run: echo "Hey from Win2!"
 
       - name: Run Postgres
-        run: docker run -d --name="db" postgres:latest
+        run:  docker run -d --name="db" -p 5433:5433 -e POSTGRES_PASSWORD=test postgres:latest
         
       - name: Check DB is running
         run: |
-          while ! docker exec db pg_isready; do
+          while ! docker exec db pg_isready -q; do
               echo "Waiting for database connection..."
               sleep 2
           done
