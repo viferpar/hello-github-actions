@@ -20,4 +20,7 @@ jobs:
           echo "Done!"
           
       - name: Install dependencies
-        run: mvn clean package    
+        run: mvn package -DskipTests=true
+        
+      - name: Tests
+        run: mvn test  
