@@ -29,7 +29,7 @@ jobs:
         run: echo "Hey from Win2!"
         
       - name: Setup MVN
-        uses: aahmed-se/setup-maven@v3
+        uses: stCarolas/setup-maven@v4.2
         with:
           maven-version: ${{ matrix.maven-versions }}
           
