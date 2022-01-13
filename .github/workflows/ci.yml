@@ -33,7 +33,7 @@ jobs:
         
       - name: Check DB is running
         run: |
-          while ! docker exec db pg_isready -q; do
+          while ! docker exec db pg_isready; do
               echo "Waiting for database connection..."
               sleep 2
           done
