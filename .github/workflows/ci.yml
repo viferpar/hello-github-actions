@@ -18,3 +18,6 @@ jobs:
         run: |
           echo "Job Context: $JOB_CONTEXT"
           echo "Done!"
+          
+      - name: Install dependencies
+        run: mvn clean package    
