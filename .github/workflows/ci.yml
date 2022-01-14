@@ -54,6 +54,11 @@ jobs:
         
       - name: See ref name   
         run:  echo "Branch name ${{ github.ref_name }}"
+        
+      - name: Only main
+        if: ${{ github.ref_name == 'main' }}
+        run: echo "My name is ${{ github.ref_name }}"
+     
      # - name: Deploy image
      #   if: ${{ github.ref_name }} == 'main'
      #   env:
