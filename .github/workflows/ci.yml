@@ -32,38 +32,37 @@ jobs:
           echo "Job Context: $JOB_CONTEXT"
           echo "Done!"
           
-#      - name: Greeting if Windows
-#        if: matrix.os == 'windows-latest'
-#        run: echo "Hey from Win2!"
+      - name: Greeting if Windows
+        if: matrix.os == 'windows-latest'
+        run: echo "Hey from Win2!"
 
-#      - name: Run Postgres
-#        run:  docker run -d --name="db" -p 5433:5433 -e POSTGRES_PASSWORD=test postgres:latest
+      - name: Run Postgres
+        run:  docker run -d --name="db" -p 5433:5433 -e POSTGRES_PASSWORD=test postgres:latest
         
-#      - name: Check DB is running
-#        run: |
-#          while ! docker exec db pg_isready; do
-#              echo "Waiting for database connection..."
-#              sleep 2
-#          done
+      - name: Check DB is running
+        run: |
+          while ! docker exec db pg_isready; do
+              echo "Waiting for database connection..."
+              sleep 2
+          done
       
-      #- name: Install dependencies
-        #run: mvn package -DskipTests=true -T 1C
+      - name: Compile
+        run: mvn package -DskipTests=true -T 1C
         
-      #- name: Run the tests
-        #run: mvn test -Dparallel=all -DperCoreThreadCount=false -DthreadCount=16
+      - name: Run the tests
+        run: mvn test -Dparallel=all -DperCoreThreadCount=false -DthreadCount=16
         
-      - name: See ref name   
-        run:  echo "Branch name ${{ github.ref_name }}"
+      
         
       - name: Only main
         if: ${{ github.ref_name == 'main' }}
         run: echo "My name is ${{ github.ref_name }}"
      
-     # - name: Deploy image
-     #   if: ${{ github.ref_name }} == 'main'
-     #   env:
-     #     DOCKER_REGISTRY: ghcr.io
-     #     DOCKER_REPOSITORY: ${{ github.repository }}
-     #     DOCKER_USER: ${{ github.actor }}
-     #     DOCKER_PWD: ${{ secrets.GITHUB_TOKEN }}
-     #   run: mvn -DskipTests=true spring-boot:build-image
+      - name: Deploy image
+        if: ${{ github.ref_name == 'main' }}
+        env:
+          DOCKER_REGISTRY: ghcr.io
+          DOCKER_REPOSITORY: ${{ github.repository }}
+          DOCKER_USER: ${{ github.actor }}
+          DOCKER_PWD: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -DskipTests=true spring-boot:build-image
