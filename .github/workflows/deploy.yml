@@ -1,15 +1,27 @@
 name: First deploy workflow
 
 on:
-  push:
-    - master
+  push: 
+    branches:
+      - master
         
 jobs:
   build:
-    runs-on: ubuntu-20.04     
+    runs-on: ubuntu-20.04
+    
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
      
       - name: Deploy image
-       # if: ${{ github.ref_name == 'main' }}
+        # if: ${{ github.ref_name == 'main' }}
         env:
           DOCKER_REGISTRY: ghcr.io
           DOCKER_REPOSITORY: ${{ github.repository }}
