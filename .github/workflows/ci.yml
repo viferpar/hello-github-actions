@@ -1,9 +1,6 @@
 name: First workflow
 
-on:
-  push:
-      branches:
-        - main
+on: [push]
         
 jobs:
   build:
@@ -56,6 +53,7 @@ jobs:
         run: mvn test -Dparallel=all -DperCoreThreadCount=false -DthreadCount=16  
         
       - name: Deploy image
+        if: ${{ github.ref_name }} == 'main'
         env:
           DOCKER_REGISTRY: ghcr.io
           DOCKER_REPOSITORY: ${{ github.repository }}
