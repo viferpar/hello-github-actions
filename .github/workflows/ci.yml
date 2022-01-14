@@ -47,7 +47,7 @@ jobs:
           done
       
       - name: Install dependencies
-        run: mvn package -DskipTests=true
+        run: mvn package -DskipTests=true -T 1C
         
       - name: Run the tests
-        run: mvn test  
+        run: mvn test -T 1C  
