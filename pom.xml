@@ -55,7 +55,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>${project.artifactId}:${TAG_VERSION}</name>
+						<name>${env.DOCKER_REPOSITORY}/${project.artifactId}:${TAG_VERSION}</name>
 						<publish>true</publish>
 					</image>
 					<docker>
