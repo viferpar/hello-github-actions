@@ -50,4 +50,4 @@ jobs:
         run: mvn package -DskipTests=true -T 1C
         
       - name: Run the tests
-        run: mvn test -T 1C  
+        run: mvn test -Dparallel=all -DperCoreThreadCount=false -DthreadCount=16  
