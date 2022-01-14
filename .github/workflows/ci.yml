@@ -2,6 +2,12 @@ name: First workflow
 
 on: [push, pull_request]
 
+env:
+  DOCKER_REGISTRY: ghcr.io
+  DOCKER_REPOSITORY: ${{ github.repository }}
+  DOCKER_USER: ${{ github.actor }}
+  DOCKER_PWD: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
   build:
     runs-on: ubuntu-20.04
@@ -51,3 +57,6 @@ jobs:
         
       - name: Run the tests
         run: mvn test -Dparallel=all -DperCoreThreadCount=false -DthreadCount=16  
+        
+      - name: Deploy image
+        run: mvn -DskipTests=true spring-boot:build-image
