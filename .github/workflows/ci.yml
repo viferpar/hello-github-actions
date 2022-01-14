@@ -50,13 +50,7 @@ jobs:
         run: mvn package -DskipTests=true -T 1C
         
       - name: Run the tests
-        run: mvn test -Dparallel=all -DperCoreThreadCount=false -DthreadCount=16
-        
-      
-        
-      - name: Only main
-        if: ${{ github.ref_name == 'main' }}
-        run: echo "My name is ${{ github.ref_name }}"
+        run: mvn test -Dparallel=all -DperCoreThreadCount=false -DthreadCount=16     
      
       - name: Deploy image
         if: ${{ github.ref_name == 'main' }}
