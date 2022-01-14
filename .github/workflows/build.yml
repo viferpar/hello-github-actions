@@ -1,4 +1,4 @@
-name: First workflow
+name: First build workflow
 
 on: [push]
         
@@ -50,13 +50,4 @@ jobs:
         run: mvn package -DskipTests=true -T 1C
         
       - name: Run the tests
-        run: mvn test -Dparallel=all -DperCoreThreadCount=false -DthreadCount=16     
-     
-      - name: Deploy image
-        if: ${{ github.ref_name == 'main' }}
-        env:
-          DOCKER_REGISTRY: ghcr.io
-          DOCKER_REPOSITORY: ${{ github.repository }}
-          DOCKER_USER: ${{ github.actor }}
-          DOCKER_PWD: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -DskipTests=true spring-boot:build-image
+        run: mvn test -Dparallel=all -DperCoreThreadCount=false -DthreadCount=16      

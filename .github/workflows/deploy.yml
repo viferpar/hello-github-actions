@@ -1,0 +1,18 @@
+name: First deploy workflow
+
+on:
+  push:
+    - master
+        
+jobs:
+  build:
+    runs-on: ubuntu-20.04     
+     
+      - name: Deploy image
+       # if: ${{ github.ref_name == 'main' }}
+        env:
+          DOCKER_REGISTRY: ghcr.io
+          DOCKER_REPOSITORY: ${{ github.repository }}
+          DOCKER_USER: ${{ github.actor }}
+          DOCKER_PWD: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -DskipTests=true spring-boot:build-image
